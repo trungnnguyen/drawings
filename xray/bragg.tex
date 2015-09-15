@@ -1,0 +1,78 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{decorations.pathmorphing}
+
+\begin{document}
+
+\tikzset{
+  cross/.style={cross out, draw=black, minimum size=2*(#1-\pgflinewidth),
+    inner sep=0pt, outer sep=0pt},
+  cross/.default={1pt},
+  xray/.style={decorate,decoration={snake, pre length=4,post length=4,amplitude=2,segment length=10},draw=gray}
+} %default radius will be 1pt.
+
+
+\tdplotsetmaincoords{90}{0}
+\pgfmathsetmacro{\ph}{0}
+\pgfmathsetmacro{\ps}{20}
+\pgfmathsetmacro{\omega}{0}
+\pgfmathsetmacro{\rad}{3}
+\pgfmathsetmacro{\rect}{0.5}
+\pgfmathsetmacro{\th}{35}
+\pgfmathsetmacro{\dpsi}{10}
+\pgfmathsetmacro{\dspacing}{0.25}
+
+\begin{tikzpicture}[tdplot_main_coords]
+  %% initial coord 1
+  \draw[thick,->] (0,0,0) -- (\rad,0,0) node[anchor=north west]{$x^s$};
+  % \draw[thick] (0,\rad,0) node[anchor=north east, xshift=-5, yshift=-5 ]{$y^s//y^X$};
+  \draw[thick,->] (0,0,0) -- (0,0,\rad) node[anchor=south]{$z^s$};
+
+  %% rotated coord 2
+  \tdplotsetrotatedcoords{\ph}{\ps}{0}
+  \draw[thick,gray,->,tdplot_rotated_coords] (0,0,0) -- (\rad,0,0) node[anchor=north west,gray]{$x^X$};
+  % \draw[thick,gray,->,tdplot_rotated_coords] (0,0,0) -- (0,\rad,0) node(y1)[anchor=south west,black]{$y^X$};
+  \draw[thick,gray,->,tdplot_rotated_coords] (0,0,0) -- (0,0,\rad) node(z1)[anchor=south west,gray]{$z^X$};
+  \draw(0,0,0) node[cross=2pt, gray]{};
+
+  \tdplotsetthetaplanecoords{\ph}
+  \draw[thick,gray,tdplot_rotated_coords](0,0,0) circle (2pt){};
+  \draw[gray, ->, tdplot_rotated_coords] (\rad*0.7,0) arc (0:\ps:\rad*0.7) node [anchor=south east]{$\psi$};
+  \draw[gray, ->, tdplot_rotated_coords] (0,\rad*0.7) arc (90:90+\ps:\rad*0.7) node [anchor=south west]{$\psi$};
+
+  %% Wavy X-ray incident beam
+  \tdplotsetrotatedcoords{\ph}{\ps}{0}
+  \draw[xray,tdplot_rotated_coords,-] (0,0,0) -- ({-cos(\th)*\rad*0.7},0,{sin(\th)*\rad*0.7}){} node[anchor=east,gray]{X-ray};
+  \draw[xray,tdplot_rotated_coords,->] (0,0,0) -- ({cos(\th)*\rad*0.7},0,{sin(\th)*\rad*0.7}){};
+
+  \tdplotsetthetaplanecoords{\ph}
+  \tdplotdrawarc[gray,<->,tdplot_rotated_coords]{(0,0,0)}{\rad/2.2}{\ps+90-\th}{\ps+90}{anchor=south west}{$\theta^\mathrm{Bragg}$}
+  % \tdplotdrawarc[blue,->,tdplot_rotated_coords]{(0,0,0)}
+  % \draw[tdplot_rotated_coords,->] (0,0,0) -- (1,0,0) node[]{X};
+  % \draw[tdplot_rotated_coords,->] (0,0,0) -- (0,1,0) node[]{Y};
+
+  %% rotated coord 3
+  \tdplotsetrotatedcoords{\ph}{\ps+\dpsi}{0}
+  \draw[gray,tdplot_rotated_coords,dashed](-1,0,0) -- (1,0,0){};
+  \draw[gray,tdplot_rotated_coords,dashed](-1,0,0.25) -- (1,0,0.25){};
+  \draw[gray,tdplot_rotated_coords,dashed](-1,0,0.5) -- (1,0,0.5){};
+  \draw[gray,tdplot_rotated_coords,dashed](-1,0,-0.25) -- (1,0,-0.25){};
+  \draw[gray,tdplot_rotated_coords,dashed](-1,0,-0.5) -- (1,0,-0.5){};
+  \draw[gray,tdplot_rotated_coords,dashed,->](0,0,0) -- (0,0,\rad*0.4) node[anchor=west]{$n^{\{hkl\}}$};
+
+  %% arrow for d-spacing
+  \draw[gray,tdplot_rotated_coords,<-](-1.05,0,-0.5) -- (-1.05,0,-0.65){};
+  \draw[gray,tdplot_rotated_coords,<-](-1.05,0,-0.25) -- (-1.05,0,-0.10){};
+  \node at (-1.6,0,-0.5) {$d^{\{hkl\}}$};
+
+  %% translated coord 4
+  \coordinate (Shift) at (-3,1,0);
+  \tdplotsetrotatedcoordsorigin{(Shift)}
+  \draw[color=gray,tdplot_rotated_coords,dashed,-] (-0.4,0,0) -- (.4,0,0);
+  \draw[color=gray,tdplot_rotated_coords,dashed,->] (0,0,0) -- (0,0,\rad*0.2) node[anchor=south]{$n^{\{hkl\}}$};
+
+\end{tikzpicture}
+\end{document}

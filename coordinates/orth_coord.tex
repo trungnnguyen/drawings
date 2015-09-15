@@ -1,0 +1,25 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepackage{pgfplots}
+
+\begin{document}
+
+
+%% Below is to rotates it based on z-x`-z`` sequence
+\tdplotsetmaincoords{50}{230}
+\pgfmathsetmacro{\rad}{2}
+\pgfmathsetmacro{\l}{3.5}
+\pgfmathsetmacro{\x}{0.9}
+\pgfmathsetmacro{\y}{2.2}
+
+\begin{tikzpicture}[tdplot_main_coords]
+  %% Initial coord
+  \draw[thick,->,>=stealth] (0,0,0) -- (0,\rad,0)  node[anchor=north east]{$\textbf{e}_1$//RD};
+  \draw[thick,->,>=stealth] (0,0,0) -- (-\rad,0,0) node[anchor=north]     {$\textbf{e}_2$//TD};
+  \draw[thick,->,>=stealth] (0,0,0) -- (0,0,\rad)  node[anchor=south]     {$\textbf{e}_3$//ND};
+
+  \draw[ultra thick](-\l*\x,-\l*\y,0) -- (\l*\x,-\l*\y,0) -- (\l*\x,\l*\y,0) -- (-\l*\x,\l*\y,0) -- (-\l*\x,-\l*\y,0) {};
+\end{tikzpicture}
+
+\end{document}
