@@ -1,0 +1,89 @@
+\documentclass{standalone}
+%\documentclass[usletter]{article}
+\usepackage{tikz}
+\usepackage{color}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric,positioning}
+\begin{document}
+
+%% E8 standards
+\newcommand*{\pl}{57.0 mm}     % parallel length
+\newcommand*{\gl}{50.0 mm}     % Gauge length
+\newcommand*{\gw}{12.5 mm}     % Gauge width
+\newcommand*{\tw}{20.0 mm}     % Grip width
+\newcommand*{\tl}{50.0 mm}     % Grip length
+\newcommand*{\rd}{12.5mm}   % Radius
+
+\newcommand*{\cA}{\tw/2.-\gw/2.}
+\newcommand*{\cth}{  acos(  (\rd-(\cA)) /\rd )   }
+\newcommand*{\cx}{\rd * sin(\cth)}
+
+%% GHT2
+\renewcommand*{\pl}{30.0 mm}     % parallel length
+\renewcommand*{\gl}{30.0 mm}     % Gauge length
+\renewcommand*{\gw}{6.35 mm}     % Gauge width
+\renewcommand*{\tw}{15.0 mm}     % Grip width
+\renewcommand*{\tl}{15.0 mm}     % Grip length
+\renewcommand*{\rd}{6.35mm}   % Radius
+
+\renewcommand*{\cA}{\tw/2.-\gw/2.}
+\renewcommand*{\cth}{  acos(  (\rd-(\cA)) /\rd )   }
+\renewcommand*{\cx}{\rd * sin(\cth)}
+
+\begin{tikzpicture}
+  % \path[draw=black, thick] (-\pl,\gw+10) -- (0,\gw+10);
+  % \node[] at (-\pl/2.,30mm ){Miniature tensile bar for SF measurement};
+  \path[draw=black, thick] (-\pl,\gw) -- (0,\gw);
+  \path[draw=black, thick] (-\pl,0  ) -- (0,0);
+
+  %% fillet
+%  \draw[draw=black, thick] (0,0) node[]{o} node[above]{(0,0)} arc (90:{90-\cth}:\rd);
+  % arc1
+  \draw[draw=black, thick] (0,0) arc (90:{90-(acos((\rd-(\cA))/\rd))}:\rd);
+  % arc2
+  \draw[draw=black, thick] (0,\gw)    arc (-90:{-90+(acos((\rd-(\cA))/\rd))}:\rd);
+  % arc3
+  \draw[draw=black, thick] (-\pl,\gw) arc (-90:{-90-((acos((\rd-(\cA))/\rd))}:\rd);
+  % arc4
+  \draw[draw=black, thick] (-\pl,0) arc (90:{90+((acos((\rd-(\cA))/\rd))}:\rd);
+  %% right grip
+  \path[draw=black, thick] ({\cx}, {-1*(\cA)}) node []{}--  ({\cx+\tl}, {-1*(\cA)}) --  ({\cx+\tl},{-1*(\cA)+\tw})-- ({\cx},{-1*(\cA)+\tw}) ;
+  %% left grip
+  \path[draw=black, thick] ({-\pl-(\cx)}, {-1*(\cA)}) -- ({-\pl-(\cx)-\tl}, {-1*(\cA)}) -- ({-\pl-(\cx)-\tl}, {-1*(\cA)+\tw})  node[below right]{30mm}  --({-\pl-(\cx)}, {-1*(\cA)+\tw});
+
+%----------------------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------
+  % %% deco
+  % %% radius deco
+  % \draw[draw=red,dashed] (0,0) arc (90:450:\rd);
+   \draw[draw=blue, thin,<->] (0,-\rd) node[right]{r=\rd} -- (0,0);
+   \draw[draw=blue, thin,<->] (0,-\rd) node[right]{r=\rd} -- ({\cx},{-1*(\cA)});
+
+  % % \node[shape=circle,draw=red] at (0,-\rd){};
+  % % width
+
+  \draw[draw=red,thin,<->] (-0.5*\pl,0) -- (-0.5*\pl,\gw/2.) node[right,xshift=\gw]{\gw} -- (-0.5*\pl,\gw);
+  \draw[draw=red,thin,<->] (-0.5*\pl-\gw/2.,\gw/2.) -- (-0.5*\pl+\gw/2.,\gw/2.);
+
+  % % grip width
+  \draw[draw=red, thin, <->] ({((\cx+\tl)+\cx)+2},{-1*(\cA)}) -- ({((\cx+\tl)+\cx)+2},{-1*(\cA)+\tw}) ;
+  \node[right] at ({((\cx+\tl)+\cx)+2},{0.5*(\gw)}){\tw};
+  % grip length
+  \draw[draw=red, thin, <->] ({\cx},{-1*(\cA)+\tw+\gw/2.}) -- ({(\cx+\tl)/2.},{-1*(\cA)+\tw+\gw/2.}) node [above]{\tl} -- ({\cx+\tl},{-1*(\cA)+\tw+\gw/2.}) ;
+
+  % % gauge length
+  % parallel length
+  \draw[draw=red, thin, <->] (-\pl,-9mm) -- ({-\pl/2.},-9mm) node [below]{\pl}-- (0,-9mm);
+  % % total length
+  \draw[draw=red, thin, <->] ({-\pl-(\cx)-\tl},-15mm) -- ({-\pl/2.},-15mm) node [below]{(\cx+\tl)*2+\pl} -- ({\cx+\tl}, -15mm);
+
+
+  %%total length can be calculated by a formula
+
+%----------------------------------------------------------------------------------------------------
+%----------------------------------------------------------------------------------------------------
+
+\end{tikzpicture}
+
+\end{document}

@@ -1,0 +1,72 @@
+\documentclass{standalone}
+%\documentclass[usletter]{article}
+\usepackage{tikz}
+\usepackage{color}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.geometric,positioning}
+\begin{document}
+
+
+
+  \newcommand*{\pl}{1.9}     % Length
+  \newcommand*{\pw}{1.9}     % Width
+  \newcommand*{\pr}{0.16}      % Radius of the center window
+
+\begin{tikzpicture}
+  \path [draw=black, thick] (-\pl/2,-\pw/2) -- (-\pl/2,\pw/2) -- (\pl/2,\pw/2) -- (\pl/2,-\pw/2) -- (-\pl/2,-\pw/2);
+  % \node[shape=circle, draw=black, radius=\pr] at (0, 0){};
+    \draw [thin](0,0) circle (\pr);      
+  \draw[draw=black, thin, <->] (-\pl/2,\pw/2*1.1) -- (0,\pw/2*1.1) node[above]{190 mm} -- (\pl/2,\pw/2*1.1){};
+  \draw[draw=black, thin, <->] (-\pl/2*1.1,-\pw/2) --(-\pl/2*1.1,0) node[above,rotate=90]{190 mm}-- (-\pl/2*1.1,\pw/2) {};
+
+
+  \draw[draw=black, thin, <->] (-\pr,\pr*1.5) -- (\pr,\pr*1.5){};
+  \node[above] at (0.0,\pr*1.5) {\tiny 32 mm};
+  
+  \node[] at (0,-\pl/2*1.5){BB};
+
+
+\end{tikzpicture}
+
+
+\begin{tikzpicture}
+  \renewcommand*{\pl}{1.9}     % Length
+  \renewcommand*{\pw}{1.4}     % Width
+  \path [draw=black, thick] (-\pl/2,-\pw/2) -- (-\pl/2,\pw/2) -- (\pl/2,\pw/2) -- (\pl/2,-\pw/2) -- (-\pl/2,-\pw/2);
+%  \node[shape=circle, draw=black, radius=\pr] at (0, 0){};
+  \draw [thin](0,0) circle (\pr);    
+  \draw[draw=black, thin, <->] (-\pl/2,\pw/2*1.1) -- (0,\pw/2*1.1) node[above]{190 mm} -- (\pl/2,\pw/2*1.1){};
+  \draw[draw=black, thin, <->] (-\pl/2*1.1,-\pw/2) --(-\pl/2*1.1,0) node[above,rotate=90]{140 mm}-- (-\pl/2*1.1,\pw/2) {};
+  \node[] at (0,-\pl/2*1.5){PSRD};
+
+
+  \end{tikzpicture}
+  
+
+\begin{tikzpicture}
+  \renewcommand*{\pl}{1.4}     % Length
+  \renewcommand*{\pw}{1.9}     % Width
+  \path [draw=black, thick] (-\pl/2,-\pw/2) -- (-\pl/2,\pw/2) -- (\pl/2,\pw/2) -- (\pl/2,-\pw/2) -- (-\pl/2,-\pw/2);
+  % \node[shape=circle, draw=black, radius=\pr] at (0, 0){};
+    \draw [thin](0,0) circle (\pr);    
+  \draw[draw=black, thin, <->] (-\pl/2,\pw/2*1.1) -- (0,\pw/2*1.1) node[above]{140 mm} -- (\pl/2,\pw/2*1.1){};
+  \draw[draw=black, thin, <->] (-\pl/2*1.1,-\pw/2) --(-\pl/2*1.1,0) node[above,rotate=90]{190 mm}-- (-\pl/2*1.1,\pw/2) {};
+
+  \node[] at (0,-\pw/2*1.5){PSTD};
+    \path [draw=black, <->] (1.5,0.7) node[above]{TD} -- (1.5,-0.1) -- (2.3,-0.1) node[right]{RD};  
+\end{tikzpicture}
+
+
+
+
+
+
+
+%\begin{tikzpicture}
+
+%\end{tikzpicture}
+
+
+  
+\end{document}
